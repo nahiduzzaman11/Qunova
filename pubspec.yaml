@@ -41,6 +41,7 @@ dependencies:
   intl:
   fluttertoast:
   flutter_svg:
+  pull_to_refresh:
 
 dev_dependencies:
   flutter_test:

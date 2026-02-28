@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:qunova/core/route/app_route.dart';
 import 'package:qunova/utils/color/app_color.dart';
 import 'package:qunova/utils/image/app_images.dart';
 import 'package:qunova/utils/strings/const_string.dart';
@@ -83,7 +85,9 @@ class _OnboradScreenState extends State<OnboradScreen> {
                     width: double.infinity,
                     height: 60,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.offAllNamed(AppRoute.contactHomeScreen);
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.white_100,
                         foregroundColor: AppColors.white_5,

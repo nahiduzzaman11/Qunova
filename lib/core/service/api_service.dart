@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:qunova/core/global/api_response_method.dart';
 import 'package:qunova/core/global/api_response_model.dart';
-import 'package:qunova/core/global/api_url.dart';
 import 'package:qunova/core/helper/share_preference_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -13,9 +12,7 @@ class ApiService {
 
   ApiService({required this.sharedPreferences});
 
-  Future<ApiResponseModel> request(
-      String uri, String method, Map<dynamic, dynamic>? params,
-      {bool passHeader = false}) async {
+  Future<ApiResponseModel> request(String uri, String method, Map<dynamic, dynamic>? params, {bool passHeader = false}) async {
     Uri url = Uri.parse(uri);
     http.Response response;
 
@@ -43,7 +40,6 @@ class ApiService {
             "Authorization" : "$tokenType $token",
             "Content-Type" : "application/json",
             "Accept" : "application/json",
-            "token" : ApiUrl.paymentTokenBkash
           });
         } else {
           response = await http.post(url, body: params, headers: {
@@ -82,7 +78,7 @@ class ApiService {
   String token = '';
   String tokenType = 'Bearer';
 
-  initToken() {
+  void initToken() {
     if (sharedPreferences.containsKey(SharedPreferenceHelper.token)) {
       String? t = sharedPreferences.getString(SharedPreferenceHelper.token);
       token = t ?? '';
