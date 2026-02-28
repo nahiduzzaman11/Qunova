@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:qunova/core/route/app_route.dart';
 import 'package:qunova/utils/color/app_color.dart';
 import 'package:qunova/utils/image/app_images.dart';
 
@@ -25,6 +27,10 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     _scaleAnimation = CurvedAnimation(parent: _controller, curve: Curves.elasticOut);
 
     _controller.forward();
+
+    Future.delayed(const Duration(seconds: 3), () {
+      Get.offAllNamed(AppRoute.onboardScreen);
+    });
   }
 
   @override
@@ -50,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
               builder: (context, child) {
                 return Transform.translate(
                   offset: Offset(
-                    200 * (1 - _controller.value), // start outside → move in
+                    200 * (1 - _controller.value),
                     -200 * (1 - _controller.value),
                   ),
                   child: child,
