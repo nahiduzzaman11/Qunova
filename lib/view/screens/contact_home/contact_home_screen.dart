@@ -80,7 +80,7 @@ class _ContactHomeScreenState extends State<ContactHomeScreen>
         floatingActionButton: ScaleTransition(
           scale: _fabAnimation,
           child: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () => _showAddContactSheet(context), // Trigger the sheet
             backgroundColor: AppColors.primary,
             child: const Icon(Icons.add, color: AppColors.white_100),
           ),
@@ -223,6 +223,128 @@ class _ContactHomeScreenState extends State<ContactHomeScreen>
       ),
     );
 
+  }
+
+  void _showAddContactSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
+        ),
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+          left: 20,
+          right: 20,
+          top: 10,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(width: 60, height: 5, decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(10))),
+              const SizedBox(height: 30),
+
+              _buildTextField(hint: "Name"),
+              const SizedBox(height: 15),
+              _buildPhoneField(),
+              const SizedBox(height: 15),
+              _buildTextField(hint: "Designation"),
+              const SizedBox(height: 15),
+              _buildTextField(hint: "Company"),
+              const SizedBox(height: 15),
+              _buildDropdownField(hint: "Relation"),
+
+              const SizedBox(height: 30),
+
+              // Save Button
+              SizedBox(
+                width: double.infinity,
+                height: 55,
+                child: ElevatedButton(
+                  onPressed: () => Navigator.pop(context),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  ),
+                  child: const Text("Save Contact", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                ),
+              ),
+              const SizedBox(height: 15),
+
+              // Cancel Button
+              SizedBox(
+                width: double.infinity,
+                height: 55,
+                child: OutlinedButton(
+                  onPressed: () => Navigator.pop(context),
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(color: Colors.grey),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  ),
+                  child: const Text("Cancel", style: TextStyle(color: Colors.grey, fontSize: 16)),
+                ),
+              ),
+              const SizedBox(height: 30),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField({required String hint}) {
+    return TextField(
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: const TextStyle(color: Colors.grey),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: const BorderSide(color: Colors.grey)),
+        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: Colors.grey.shade300)),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+      ),
+    );
+  }
+
+  Widget _buildPhoneField() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey.shade300),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        children: [
+          Image.network("https://cdn-icons-png.flaticon.com/512/323/323310.png", width: 25),
+          const Icon(Icons.keyboard_arrow_down, color: Colors.grey),
+          const VerticalDivider(),
+          const Expanded(
+            child: TextField(
+              decoration: InputDecoration(hintText: "+880  01112 432 654", border: InputBorder.none),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDropdownField({required String hint}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+      decoration: BoxDecoration(border: Border.all(color: Colors.grey.shade300), borderRadius: BorderRadius.circular(8)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(hint, style: const TextStyle(color: Colors.grey, fontSize: 16)),
+          const Icon(Icons.keyboard_arrow_down, color: Colors.grey),
+        ],
+      ),
+    );
   }
   Widget _buildDefaultAppBar(ContactController controller) {
     return Row(
